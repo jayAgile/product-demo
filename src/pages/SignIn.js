@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/signin.css";
+import { getToken } from "firebase/messaging";
+import { messaging } from "../firebase";
 export default function SignIn() {
   const navigate = useNavigate();
   const handleClick = () => navigate("/register");
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission == "granted") {
+      //generate token
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BKDUNMlRoikc1ni1J-kjTBbFrmxCK2xncLradoMq7Vitq_Zr2e4MlJ3JIOWGAZh3VKO0rC3WiQJMwaikhZAeYjs",
+      });
+      console.log("token generated", token);
+    } else if (permission == "denied") {
+      alert("denined permission");
+    }
+  }
 
+  useEffect(() => {
+    // dispatch(getUser());
+    // dispatch(getProductList());
+    // console.log("hello");
+    requestPermission();
+
+    // getFCMToken(setTokenFound);
+  }, []);
   return (
     <>
       <section
