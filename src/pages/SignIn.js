@@ -15,6 +15,7 @@ export default function SignIn() {
           "BKDUNMlRoikc1ni1J-kjTBbFrmxCK2xncLradoMq7Vitq_Zr2e4MlJ3JIOWGAZh3VKO0rC3WiQJMwaikhZAeYjs",
       });
       console.log("token generated", token);
+      localStorage.setItem("token", token);
     } else if (permission == "denied") {
       alert("denined permission");
     }
